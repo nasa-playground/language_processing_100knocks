@@ -10,6 +10,13 @@ fn pick_odd(s: &str) -> String {
         .collect()
 }
 
+fn add_string(s1: &str, s2: &str) -> String {
+    s1.chars()
+        .zip(s2.chars())
+        .map(|(c1, c2)| format!("{}{}", c1, c2))
+        .collect()
+}
+
 #[test]
 fn reverse_test() {
     assert_eq!(reverse("stressed"), "desserts");
