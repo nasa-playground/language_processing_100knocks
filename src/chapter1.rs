@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 fn reverse(s: &str) -> String {
     s.chars().rev().collect::<String>()
 }
@@ -15,6 +17,10 @@ fn add_string(s1: &str, s2: &str) -> String {
         .zip(s2.chars())
         .map(|(c1, c2)| format!("{}{}", c1, c2))
         .collect()
+}
+
+fn word_len(s: &str) -> Vec<usize> {
+    s.split_whitespace().map(|word| word.len()).collect()
 }
 
 #[test]
