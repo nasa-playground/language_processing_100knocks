@@ -40,6 +40,12 @@ fn simbolo_elementare(s: &str) -> HashMap<usize, String> {
         })
 }
 
+fn n_gram(s: &str, n: usize) -> Vec<String> {
+    (0..(s.len() - n + 1))
+        .map(|i| String::from(&s[i..(i + n)]))
+        .collect()
+}
+
 #[test]
 fn reverse_test() {
     assert_eq!(reverse("stressed"), "desserts");
@@ -69,8 +75,19 @@ fn word_len_test() {
 fn simbolo_elementare_test() {
     let s = "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.";
 
-    let hash = simbolo_elementare(s);
+    // let hash = simbolo_elementare(s);
 
     // TODO テストケース
     // めんどくさいからいつか書く(書かない)
+}
+
+#[test]
+fn n_gram_test() {
+    let s = "I am an NLPer";
+    let bigram = n_gram(s, 2);
+
+    assert_eq!(
+        bigram,
+        vec!["I ", " a", "am", "m ", " a", "an", "n ", " N", "NL", "LP", "Pe", "er"]
+    )
 }
