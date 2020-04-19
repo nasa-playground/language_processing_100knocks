@@ -1,4 +1,5 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
+use std::iter::FromIterator;
 
 fn reverse(s: &str) -> String {
     s.chars().rev().collect::<String>()
@@ -46,6 +47,31 @@ fn n_gram(s: &str, n: usize) -> Vec<String> {
         .collect()
 }
 
+type H = HashSet<String>;
+fn set(s1: &str, s2: &str) -> Vec<H> {
+    let x = HashSet::from_iter(n_gram(s1, 2));
+    let y = HashSet::from_iter(n_gram(s2, 2));
+
+    vec![&x | &y, &x & &y, &x - &y]
+}
+
+fn template(x: &str, y: &str, z: &str) -> String {
+    format!("{}時の{}は{}", x, y, z)
+}
+
+fn chipher(s: &str) -> String {
+    s.chars()
+        .map(|c| {
+            let code = c as u8;
+            if 97 <= code && code <= 122 {
+                (219 - code) as char
+            } else {
+                c
+            }
+        })
+        .collect()
+}
+
 #[test]
 fn reverse_test() {
     assert_eq!(reverse("stressed"), "desserts");
@@ -90,4 +116,22 @@ fn n_gram_test() {
         bigram,
         vec!["I ", " a", "am", "m ", " a", "an", "n ", " N", "NL", "LP", "Pe", "er"]
     )
+}
+
+#[test]
+fn set_test() {
+    let sets = set("paraparaparadise", "paragraph");
+
+    // TODO
+    // assert_eq!(vec![HashSet::new(), HashSet::new(), HashSet::new()], sets);
+}
+
+#[test]
+fn template_test() {
+    assert_eq!(template("12", "気温", "22.4"), "12時の気温は22.4")
+}
+
+#[test]
+fn chipher_test() {
+    assert_eq!("zhwu", chipher("asdf"))
 }
